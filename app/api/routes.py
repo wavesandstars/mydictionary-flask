@@ -6,11 +6,11 @@ api = Blueprint('api',__name__, url_prefix='/api')
 
 @api.route('/getdata')
 def getdata():
-    return {'yee': 'naw'}
+    return {'hi': 'there'}
 
 # @api.route('/data')
 # def viewdata():
-#     data = get_contact()
+#     data = get_car()
 #     response = jsonify(data)
 #     print(response)
 #     return render_template('index.html', data = data)
@@ -35,7 +35,7 @@ def create_car(current_user_token):
 
 @api.route('/cars', methods = ['GET'])
 @token_required
-def get_contact(current_user_token):
+def get_car(current_user_token):
     a_user = current_user_token.token
     cars = Car.query.filter_by(user_token = a_user).all()
     response = cars_schema.dump(cars)
@@ -68,9 +68,9 @@ def update_car(current_user_token,id):
 
 
 # DELETE car ENDPOINT
-@api.route('/car/<id>', methods = ['DELETE'])
+@api.route('/cars/<id>', methods = ['DELETE'])
 @token_required
-def delete_car(current_user_token, id):
+def delete_car(current_user_token,id):
     car = Car.query.get(id)
     db.session.delete(car)
     db.session.commit()
