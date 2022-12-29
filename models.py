@@ -53,31 +53,31 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f'User {self.email} has been added to the database'
 
-# make a class where you can add cars
-class Car(db.Model):
+# make a class where you can add words to your dictionary 
+class Word(db.Model):
     id = db.Column(db.String, primary_key = True)
-    make = db.Column(db.String(150), nullable = False)
-    model = db.Column(db.String(150))
-    year = db.Column(db.String(4))
+    savedword = db.Column(db.String(150), nullable = False)
+    meaning = db.Column(db.String(300))
+    speechtype = db.Column(db.String(150))
     user_token = db.Column(db.String, db.ForeignKey('user.token'), nullable = False)
 
-    def __init__(self,make,model,year,user_token, id = ''):
+    def __init__(self,savedword,meaning,speechtype,user_token, id = ''):
         self.id = self.set_id()
-        self.make = make
-        self.model = model
-        self.year = year
+        self.savedword = savedword
+        self.meaning = meaning
+        self.speechtype = speechtype
         self.user_token = user_token
 
 
     def __repr__(self):
-        return f'The following car has been added to the inventory: {self.make} {self.model}'
+        return f'The following word has been added to your dictionary: {self.savedword}'
 
     def set_id(self):
         return (secrets.token_urlsafe())
 
-class CarSchema(ma.Schema):
+class WordSchema(ma.Schema):
     class Meta:
-        fields = ['id', 'make','model','year']
+        fields = ['id', 'savedword','meaning','speechtype']
 
-car_schema = CarSchema()
-cars_schema = CarSchema(many=True)
+word_schema = WordSchema()
+words_schema = WordSchema(many=True)
